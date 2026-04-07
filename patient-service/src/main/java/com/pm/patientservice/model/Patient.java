@@ -31,6 +31,9 @@ public class Patient {
     @Size(min = 5,max = 100,message = "address must be have 5 character and max 100 character")
     private String address;
 
+    @NotNull(message = "gender is required")
+    private String gender;
+
     @NotNull(message = "date of birth required")
     private LocalDate dateOfBirth;
 
