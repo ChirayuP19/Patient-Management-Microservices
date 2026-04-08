@@ -30,6 +30,22 @@ services:
       - postgres
     restart: unless-stopped
 
+  patient-service:
+    image: patient-service
+    container_name: patient-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-service-db:5432/db
+      SPRING_DATASOURCE_USERNAME: chirayu
+      SPRING_DATASOURCE_PASSWORD: chirayu
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "4000:4000"
+    networks:
+      - patient-microservice
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
 networks:
   patient-microservice:
     driver: bridge

@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @NotNull(message = "name is required")
