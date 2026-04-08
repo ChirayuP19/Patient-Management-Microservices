@@ -1,31 +1,23 @@
-package com.pm.patientservice.model;
+package com.pm.patientservice.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.UUID;
 
-@Entity
-@Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
-
-    @NotNull(message = "name is required")
-    @Size(min = 2,max = 35,message = "name character must be between 2 and 35")
+@Getter
+public class PatientRequestDTO {
+    @NotBlank(message = "name is required")
+    @Size(min = 2,max = 100,message = "name can't exceed 100 characters")
     private String name;
 
-    @NotNull(message = "email is required")
-    @Email
+    @NotBlank(message = "email is required")
+    @Email(message = "Email should be valid")
     @Column(unique = true)
     private String email;
 
@@ -37,9 +29,9 @@ public class Patient {
     private String gender;
 
     @NotNull(message = "date of birth required")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull(message = "register date is required")
-    private LocalDate registeredDate;
+    private String registeredDate;
 
 }
