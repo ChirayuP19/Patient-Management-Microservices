@@ -1,0 +1,38 @@
+services:
+  postgres:
+    container_name: patient-service-db
+    image: postgres
+    environment:
+      POSTGRES_USER: chirayu
+      POSTGRES_PASSWORD: chirayu
+      POSTGRES_DB: db
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - patient-microservice
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: patient-admin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    networks:
+      - patient-microservice
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  patient-microservice:
+    driver: bridge
+
+volumes:
+  postgres:

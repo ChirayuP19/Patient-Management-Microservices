@@ -25,8 +25,8 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public List<PatientResponseDTO> getAllPatients() {
-        List<Patient> patiens = patientRepository.findAll();
-        return patiens.stream()
+        List<Patient> patients = patientRepository.findAll();
+        return patients.stream()
                 .map(PatientMapper::toDTO).toList();
     }
 
@@ -43,10 +43,10 @@ public class PatientServiceImpl implements PatientService{
     @Transactional
     public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO requestDTO) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Patient not found with ID:: " + id));
-        if(patientRepository.existsByEmail(requestDTO.getEmail())){
-            throw new EmailAlreadyExistsException("Email :: "+requestDTO.getEmail()+" already exists"+requestDTO);
-        }
         if(requestDTO.getEmail()!=null){
+            boolean email = patientRepository.existsByEmail(requestDTO.getEmail());
+            if(email)
+                throw new EmailAlreadyExistsException(requestDTO.getEmail()+" already exist ");
             patient.setEmail(requestDTO.getEmail());
         }
         if(requestDTO.getName()!=null){
@@ -64,5 +64,12 @@ public class PatientServiceImpl implements PatientService{
         patientRepository.save(patient);
 
         return PatientMapper.toDTO(patient);
+    }
+
+    @Override
+    public void deletePatient(UUID patientId) {
+        patientRepository.findById(patientId)
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with ID:: " + patientId));
+        patientRepository.deleteById(patientId);
     }
 }
