@@ -2,6 +2,7 @@ package com.pm.patientservice.service;
 
 import com.pm.patientservice.dto.PatientRequestDTO;
 import com.pm.patientservice.dto.PatientResponseDTO;
+import com.pm.patientservice.dto.PatientUpdateRequestDTO;
 import com.pm.patientservice.exception.EmailAlreadyExistsException;
 import com.pm.patientservice.exception.PatientNotFoundException;
 import com.pm.patientservice.mapper.PatientMapper;
@@ -46,7 +47,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     @Transactional
-    public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO requestDTO) {
+    public PatientResponseDTO updatePatient(UUID id, PatientUpdateRequestDTO requestDTO) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Patient not found with ID:: " + id));
         if(requestDTO.getEmail()!=null){
             boolean email = patientRepository.existsByEmail(requestDTO.getEmail());

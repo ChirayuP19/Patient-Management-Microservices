@@ -2,6 +2,7 @@ package com.pm.patientservice.controller;
 
 import com.pm.patientservice.dto.PatientRequestDTO;
 import com.pm.patientservice.dto.PatientResponseDTO;
+import com.pm.patientservice.dto.PatientUpdateRequestDTO;
 import com.pm.patientservice.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,7 +44,7 @@ public class PatientController {
     @Operation(summary = "Update Patient")
     public ResponseEntity<PatientResponseDTO> updatePatient(
             @PathVariable("patientId") UUID patientId,
-            @Valid @RequestBody PatientRequestDTO requestDTO) {
+            @Valid @RequestBody PatientUpdateRequestDTO requestDTO) {
         return ResponseEntity.ok(patientService.updatePatient(patientId, requestDTO));
     }
 

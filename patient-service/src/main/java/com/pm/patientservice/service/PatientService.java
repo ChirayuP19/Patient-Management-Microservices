@@ -2,6 +2,7 @@ package com.pm.patientservice.service;
 
 import com.pm.patientservice.dto.PatientRequestDTO;
 import com.pm.patientservice.dto.PatientResponseDTO;
+import com.pm.patientservice.dto.PatientUpdateRequestDTO;
 import com.pm.patientservice.model.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,6 @@ public interface PatientService {
 
     Page<PatientResponseDTO> getAllPatients(int page, int size, String sortBy, String sortDir);
     PatientResponseDTO createPatient(PatientRequestDTO requestDTO);
-    PatientResponseDTO updatePatient(UUID id, PatientRequestDTO requestDTO);
+    PatientResponseDTO updatePatient(UUID id, PatientUpdateRequestDTO requestDTO);
     void deletePatient(UUID patientId);
 }
